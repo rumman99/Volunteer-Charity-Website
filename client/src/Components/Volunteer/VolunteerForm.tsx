@@ -12,7 +12,7 @@ interface TaskInterface {
 }
 
 
-const Volunteer = () => {
+const VolunteerForm = () => {
     type TaskParamsId={id:string};
     const {id}= useParams<TaskParamsId>();
     const {userLogin}= useContext(UserLoginContext);
@@ -48,19 +48,19 @@ const Volunteer = () => {
          <form className='mt-10' onSubmit={handleSubmit(onSubmit)}>
          <p className='text-center mb-5 text-blue-700 text-2xl font-semibold'>Register as a Volunteer</p>
             <label className='ml-2 text-red-500 font-semibold' htmlFor="">Full Name:</label><br/>
-            <input className={styleForm} type="text" placeholder="Full Name" {...register("Full Name", {required: true, maxLength: 80})} /><br/>
+            <input className={styleForm} type="text" placeholder="Full Name" {...register("fullName", {required: true, maxLength: 80})} /><br/>
             <label className='ml-2 text-red-500 font-semibold' htmlFor="">Email:</label><br/>
-            <input readOnly defaultValue={userLogin.email} className={styleForm} type="text" placeholder="Email" {...register("Email", {required: true, pattern: /^\S+@\S+$/i})} /><br/>
+            <input readOnly defaultValue={userLogin.email} className={styleForm} type="text" placeholder="Email" {...register("email", {required: true, pattern: /^\S+@\S+$/i})} /><br/>
             <label className='ml-2 text-red-500 font-semibold' htmlFor="">Description:</label><br/>
-            <input className={styleForm} type="text" placeholder="Description" {...register("Description", {required: true, maxLength: 100})} /><br/>
+            <input className={styleForm} type="text" placeholder="Description" {...register("description", {required: true, maxLength: 100})} /><br/>
             <label className='ml-2 text-red-500 font-semibold' htmlFor="">Volunteering Task:</label><br/>
-            <input readOnly defaultValue={taskList?.name} className={styleForm} type="text" placeholder="Volunteering Task" {...register("Volunteering Task", {required: true, maxLength: 100})} /><br/>
+            <input readOnly defaultValue={taskList?.name} className={styleForm} type="text" placeholder="Volunteering Task" {...register("volunteeringTask", {required: true, maxLength: 100})} /><br/>
             <label className='ml-2 text-red-500 font-semibold' htmlFor="">Date:</label><br/>
-            <input className={styleForm} type="date" placeholder="Date" {...register("Date", {required: true})} /><br/>
+            <input className={styleForm} type="date" placeholder="Date" {...register("date", {required: true})} /><br/>
             <label className='ml-2 text-red-500 font-semibold' htmlFor="">Mobile:</label><br/>
-            <input className={styleForm} type="tel" placeholder="Mobile number" {...register("Mobile number", {required: true, minLength: 6, maxLength: 12})} /><br/>
+            <input className={styleForm} type="tel" placeholder="Mobile number" {...register("mobileNumber", {required: true, minLength: 6, maxLength: 12})} /><br/>
             <label className='ml-2 text-red-500 font-semibold' htmlFor="">Gender:</label><br/>
-            <select className='border border-gray-400 w-24 rounded-full ml-2' {...register("Title", { required: true })}>
+            <select className='border border-gray-400 w-24 rounded-full ml-2' {...register("title", { required: true })}>
                 <option value="male">Male</option>
                 <option value="female">Female</option>
                 <option value="others">Others</option>
@@ -72,4 +72,4 @@ const Volunteer = () => {
     );
 };
 
-export default Volunteer;
+export default VolunteerForm;

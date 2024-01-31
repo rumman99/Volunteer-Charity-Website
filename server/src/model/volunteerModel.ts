@@ -1,13 +1,21 @@
 import {Schema, model} from "mongoose";
 
-interface Task{
+export interface Task{
     name: string,
     img: string,
     id: string
 }
 
-interface Volunteer{
-    userDetails: object,
+export interface Volunteer{
+    userDetails: {
+        fullName: string,
+        email: string,
+        description: string,
+        volunteeringTask: string,
+        date: Date,
+        mobileNumber: number,
+        title: string
+    },
     taskName: string,
     userName: string,
     email: string,
