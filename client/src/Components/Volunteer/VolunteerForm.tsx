@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import { UserLoginContext } from '../../context/userLoginContext';
+import { getAuth } from 'firebase/auth';
 
 const styleForm= 'mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500';
 
@@ -50,7 +51,7 @@ const VolunteerForm = () => {
             <label className='ml-2 text-red-500 font-semibold' htmlFor="">Full Name:</label><br/>
             <input className={styleForm} type="text" placeholder="Full Name" {...register("fullName", {required: true, maxLength: 80})} /><br/>
             <label className='ml-2 text-red-500 font-semibold' htmlFor="">Email:</label><br/>
-            <input readOnly defaultValue={userLogin.email} className={styleForm} type="text" placeholder="Email" {...register("email", {required: true, pattern: /^\S+@\S+$/i})} /><br/>
+            <input readOnly defaultValue={userLogin.email || getAuth().currentUser?.email} className={styleForm} type="text" placeholder="Email" {...register("email", {required: true, pattern: /^\S+@\S+$/i})} /><br/>
             <label className='ml-2 text-red-500 font-semibold' htmlFor="">Description:</label><br/>
             <input className={styleForm} type="text" placeholder="Description" {...register("description", {required: true, maxLength: 100})} /><br/>
             <label className='ml-2 text-red-500 font-semibold' htmlFor="">Volunteering Task:</label><br/>

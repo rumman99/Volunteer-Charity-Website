@@ -1,4 +1,4 @@
-import { Fragment } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Disclosure, Menu, Transition  } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { NavLink } from "react-router-dom";
@@ -6,6 +6,7 @@ import logo from "../../assets/logo.png"
 import { useContext } from "react";
 import { UserLoginContext } from "../../context/userLoginContext";
 import "./style.css"
+import { getAuth, signOut } from 'firebase/auth';
 
 const navigation = [
     { name: 'Home', href: '/', current: false },
@@ -21,6 +22,24 @@ const navigation = [
 
 const Navbar = () => {
     const {userLogin, setUserLogin}= useContext(UserLoginContext);
+    const [sessionUser, setSessionUser]= useState()
+    useEffect(()=>{
+        const sessionUser= JSON.parse(sessionStorage.getItem('user'));
+        setSessionUser(sessionUser);
+    },[])
+
+/////// LOGOUT Implementation //////////////
+    const handleLogOut=()=>{        /// 
+      const auth = getAuth();          /////  
+      signOut(auth).then(() => {          /////
+        setUserLogin({name:'', email:''});    /////
+        sessionStorage.removeItem('token');       ////
+        sessionStorage.removeItem('user');          ////
+      }).catch((error) => {                           /////
+      console.log(error);                       ///////
+      });                                ////////// 
+    }                               ///////
+///////////////////////////////////////    
 
     return (
         <div>
@@ -83,7 +102,8 @@ const Navbar = () => {
                 {/* Login/Profile*/}
                 <Menu as="div" className="relative ml-3">
                   <div>
-                  {!userLogin.email ? <NavLink to='login'><button className="hover:text-white btn btn-warning ">Login</button></NavLink> : <NavLink to='userTask' className="underline decoration-8 decoration-blue-700 hover:decoration-white hover:text-blue-500 btn btn-ghost text-white xl:text-lg">{userLogin.name}</NavLink>}
+                  {userLogin.email || sessionStorage.getItem('user') ? <NavLink to='userTask' className="underline decoration-8 decoration-blue-700 hover:decoration-white hover:text-blue-500 btn btn-ghost text-white xl:text-lg">{userLogin.name || sessionUser?.name}</NavLink>: <NavLink to='login'><button className="hover:text-white btn btn-warning ">Login</button></NavLink>}
+                  {sessionStorage.getItem('user')&& <button onClick={handleLogOut} className="ml-4 btn btn-error">Logout</button>}
                   </div>
                 </Menu>
               </div>
