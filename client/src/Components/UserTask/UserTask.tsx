@@ -17,7 +17,7 @@ const UserTask = () => {
     const [userTask, setUserTask]= useState<userTaskInterface[]>()
     useEffect(()=>{
         const fetching=(async()=>{
-            const getData= await fetch(`http://localhost:3333/userTask?email=${email}`);
+            const getData= await fetch(`https://volunteer-charity.up.railway.app/userTask?email=${email}`);
             const result= await getData.json();
             console.log(result);
             setUserTask(result);
