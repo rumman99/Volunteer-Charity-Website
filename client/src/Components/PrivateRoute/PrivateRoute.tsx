@@ -6,10 +6,11 @@ const PrivateRoute = ({children}) => {
     const {userLogin, setUserLogin}= useContext(UserLoginContext);
     const location= useLocation();
 
-    if(!userLogin.email){
-        return <Navigate to='/login' state={{ from: location }} replace/>
-    }
+    if(sessionStorage.getItem('token') || userLogin.email){
     return children;
+    }
+    return <Navigate to='/login' state={{ from: location }} replace/>
+
 };
 
 export default PrivateRoute;

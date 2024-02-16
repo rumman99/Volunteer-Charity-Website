@@ -1,23 +1,19 @@
 import './style.css'
 import { initializeApp } from "firebase/app";
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "firebase/auth";
 import firebaseConfig from "./firebase_config";
-import { useContext, useState } from "react";
-import { UserLoginContext } from '../../context/userLoginContext';
+import { useContext, useEffect, useState } from "react";
+import { UserLoginContext, UserLoginType } from '../../context/userLoginContext';
 import { useLocation, useNavigate } from 'react-router-dom';
-
+import "firebase/compat/auth"
+import firebase from 'firebase/compat/app';
 
 const provider = new GoogleAuthProvider();
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-type User = {
-  name: string;
-  email: string;
-};
-
 const Login = () => {
-const [isLogin, setIsLogin]= useState<User>({ name: '', email: '' });
+// const [isLogin, setIsLogin]= useState<UserLoginType>();
 const {userLogin, setUserLogin}= useContext(UserLoginContext);
 const navigate = useNavigate();
 const location= useLocation();
@@ -30,7 +26,9 @@ const handleLoginButton=()=>{
       const {displayName, email} = result.user;
       if(displayName && email){
         const user:User= {name:displayName, email}
-        setIsLogin(user);
+        userToken();
+        authStateChangeOnRefresh();
+        // setIsLogin(user);
         setUserLogin(user);
         navigate(from, { replace: true });
       }
@@ -47,6 +45,39 @@ const handleLoginButton=()=>{
       // console.log(errorCode, errorMessage, email);
     });
 }
+
+const userToken=()=>{
+    getAuth().currentUser?.getIdToken(/* forceRefresh */ true)
+    .then(function(idToken:string) {
+      sessionStorage.setItem('token', idToken);
+    }).catch(function(error) {
+      console.log(error);
+    });
+}
+
+const authStateChangeOnRefresh=()=>{
+  onAuthStateChanged(auth, (userLogin)=>{
+    if (userLogin) {
+      // User is signed in
+      sessionStorage.setItem('user', JSON.stringify({name:userLogin.displayName, email:userLogin.email}))
+    } else {
+      // User is signed out
+      console.log('User is signed out');
+    }
+  })
+}
+
+useEffect(()=>{
+  auth.setPersistence(firebase.auth.Auth.Persistence.SESSION)
+  .then(() => {
+    onAuthStateChanged(auth, authStateChangeOnRefresh);
+  })
+  .catch((error) => {
+    // Handle errors
+    console.error('Error enabling persistence:', error);
+  });
+},[])
+
 
 
     return (

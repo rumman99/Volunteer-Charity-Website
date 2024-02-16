@@ -1,6 +1,7 @@
+import { signOut } from 'firebase/auth';
 import { createContext, useContext, useState } from 'react'
 
-type UserLoginType={
+export type UserLoginType={
     name: string,
     email: string,
 }
@@ -30,8 +31,5 @@ export const UserLoginContextProvider = ({children}:userLoginProviderProps) => {
             {children}
         </UserLoginContext.Provider>
     )
-
 };
 
-
-    
