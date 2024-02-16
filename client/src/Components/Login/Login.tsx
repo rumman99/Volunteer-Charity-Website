@@ -2,8 +2,8 @@ import './style.css'
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "firebase/auth";
 import firebaseConfig from "./firebase_config";
-import { useContext, useEffect, useState } from "react";
-import { UserLoginContext, UserLoginType } from '../../context/userLoginContext';
+import { useContext, useEffect} from "react";
+import { UserLoginContext } from '../../context/userLoginContext';
 import { useLocation, useNavigate } from 'react-router-dom';
 import "firebase/compat/auth"
 import firebase from 'firebase/compat/app';

@@ -1,5 +1,4 @@
-import { signOut } from 'firebase/auth';
-import { createContext, useContext, useState } from 'react'
+import { createContext, useState } from 'react'
 
 export type UserLoginType={
     name: string,

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserLoginContext } from "../../context/userLoginContext";
 import "./style.css"
 import { getAuth } from "firebase/auth";
@@ -12,7 +12,6 @@ interface userTaskInterface{
 }
 
 const UserTask = () => {
-    const {userLogin, setUserLogin}= useContext(UserLoginContext);
     const {email}= getAuth().currentUser;
     const [userTask, setUserTask]= useState<userTaskInterface[]>()
     useEffect(()=>{
