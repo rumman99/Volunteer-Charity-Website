@@ -21,7 +21,7 @@ const Volunteer = () => {
       //Show All Product From Database
       useEffect(()=>{
         if (id){ 
-        fetch('http://localhost:3333/')
+        fetch('https://volunteer-charity.up.railway.app/')
         .then(data => data.json())
         .then(result => {
             const task= result?.find((foundTask:TaskInterface)=> parseInt(foundTask.id)===parseInt(id))
@@ -34,7 +34,7 @@ const Volunteer = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const onSubmit = (data:object) => {
         const volunteerTaskForUser= {userDetails:data, taskName:taskList?.name, userName:userLogin.name, email:userLogin.email, date:new Date().toDateString("dd/MM/yyyy")}
-        fetch('http://localhost:3333/volunteer', {
+        fetch('https://volunteer-charity.up.railway.app/volunteer', {
             method: "POST",
             body: JSON.stringify(volunteerTaskForUser),
             headers: {'Content-Type': 'application/json'}

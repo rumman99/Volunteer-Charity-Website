@@ -14,7 +14,7 @@ const Home = () => {
 
     //Show All Product From Database
     useEffect(()=>{
-        fetch('http://localhost:3333/')
+        fetch('https://volunteer-charity.up.railway.app/')
         .then(data => data.json())
         .then(result => setTaskList(result))
         .catch(err => console.log(err))
