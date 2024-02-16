@@ -28,6 +28,6 @@ const errorHandle=(err:ErrorRequestHandler, req:Request, res:Response, next:Next
     }
 }
 
-app.listen(PORT, ()=>{
+app.listen(process.env.PORT || PORT, ()=>{
     log.info(`Listening to Port ${PORT}`)
 });
